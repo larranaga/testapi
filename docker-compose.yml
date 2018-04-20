@@ -1,0 +1,19 @@
+version: "3"
+services:
+  people-db:
+    image: mongo
+    volumes:
+      - "peopledata:/data/db"
+    ports:
+      - "27017:27017"
+  test-api:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      MONGO_HOST: 'people-db'
+      PORT: '3000'
+    depends_on:
+      - people-db
+volumes:
+  peopledata:
